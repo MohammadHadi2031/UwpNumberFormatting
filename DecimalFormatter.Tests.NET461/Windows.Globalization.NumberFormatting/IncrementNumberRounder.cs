@@ -11,7 +11,7 @@ namespace Windows.Globalization.NumberFormatting
     public partial class IncrementNumberRounder : global::Windows.Globalization.NumberFormatting.INumberRounder
     {
         private RoundingAlgorithm roundingAlgorithm = RoundingAlgorithm.RoundHalfUp;
-        private double increment;
+        private double increment = 1d;
 
         public RoundingAlgorithm RoundingAlgorithm
         {
@@ -123,17 +123,14 @@ namespace Windows.Globalization.NumberFormatting
             throw new global::System.NotImplementedException("The member float IncrementNumberRounder.RoundSingle(float value) is not implemented in Uno.");
         }
 #endif
-#if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
-        [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
         public double RoundDouble(double value)
         {
-            throw new global::System.NotImplementedException("The member double IncrementNumberRounder.RoundDouble(double value) is not implemented in Uno.");
+            var rounded = value / increment;
+            rounded = Rounder.Round(rounded, 0, RoundingAlgorithm);
+            rounded *= increment;
+
+            return rounded;
         }
-#endif
-        // Forced skipping of method Windows.Globalization.NumberFormatting.IncrementNumberRounder.RoundingAlgorithm.get
-        // Forced skipping of method Windows.Globalization.NumberFormatting.IncrementNumberRounder.RoundingAlgorithm.set
-        // Forced skipping of method Windows.Globalization.NumberFormatting.IncrementNumberRounder.Increment.get
-        // Forced skipping of method Windows.Globalization.NumberFormatting.IncrementNumberRounder.Increment.set
-        // Processing: Windows.Globalization.NumberFormatting.INumberRounder
+       
     }
 }
