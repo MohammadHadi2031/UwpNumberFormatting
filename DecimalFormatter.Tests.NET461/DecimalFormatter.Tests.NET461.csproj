@@ -97,6 +97,7 @@
     <Compile Include="Windows.Globalization.NumberFormatting\INumberRounderOption.cs" />
     <Compile Include="Windows.Globalization.NumberFormatting\ISignedZeroOption.cs" />
     <Compile Include="Windows.Globalization.NumberFormatting\ISignificantDigitsOption.cs" />
+    <Compile Include="Windows.Globalization.NumberFormatting\MathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

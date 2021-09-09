@@ -1,12 +1,8 @@
-#pragma warning disable 108 // new keyword hiding
-#pragma warning disable 114 // new keyword hiding
 using System;
+using System.Globalization;
 
 namespace Windows.Globalization.NumberFormatting
 {
-    // #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
-    // [global::Uno.NotImplemented]
-    // #endif
     public partial class DecimalFormatter :
         global::Windows.Globalization.NumberFormatting.INumberFormatterOptions,
         global::Windows.Globalization.NumberFormatting.INumberFormatter,
@@ -16,6 +12,8 @@ namespace Windows.Globalization.NumberFormatting
         global::Windows.Globalization.NumberFormatting.INumberRounderOption,
         global::Windows.Globalization.NumberFormatting.ISignedZeroOption
     {
+        const string minusSign = "-";
+
         public bool IsDecimalPointAlwaysDisplayed
         {
             get;
@@ -26,7 +24,7 @@ namespace Windows.Globalization.NumberFormatting
         {
             get;
             set;
-        }
+        } = 1;
 
         public bool IsGrouped
         {
@@ -47,7 +45,7 @@ namespace Windows.Globalization.NumberFormatting
         {
             get;
             set;
-        }
+        } = 2;
 
 #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
         [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
@@ -97,7 +95,7 @@ namespace Windows.Globalization.NumberFormatting
         {
             get;
             set;
-        }
+        } = 0;
 
 #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
         [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
@@ -107,10 +105,9 @@ namespace Windows.Globalization.NumberFormatting
         }
 #endif
 
-        // Forced skipping of method Windows.Globalization.NumberFormatting.DecimalFormatter.DecimalFormatter(System.Collections.Generic.IEnumerable<string>, string)
         public DecimalFormatter()
         {
-            // global::Windows.Foundation.Metadata.ApiInformation.TryRaiseNotImplemented("Windows.Globalization.NumberFormatting.DecimalFormatter", "DecimalFormatter.DecimalFormatter()");
+
         }
 
 #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
@@ -155,8 +152,15 @@ namespace Windows.Globalization.NumberFormatting
 
         public string FormatDouble(double value)
         {
+            const string numberDecimalSeparator = ".";
+            
+
+            if (NumberRounder != null)
+            {
+                value = NumberRounder.RoundDouble(value);
+            }
+
             bool isNegative = BitConverter.DoubleToInt64Bits(value) < 0;
-            string minusSign = "-";
 
             if (value == 0d &&
                 IntegerDigits == 0 &&
@@ -169,21 +173,25 @@ namespace Windows.Globalization.NumberFormatting
             }
 
             var integerPart = (int)Math.Truncate(value);
-            var fractionPart = value - (double)integerPart;
-            fractionPart = Math.Round(fractionPart, 12);
 
             bool addMinusSign = isNegative && value == 0;
 
-
-
-            var integerPartLen = GetIntegerLength(integerPart);
+            var integerPartLen = integerPart.GetLength();
             var fractionDigit = Math.Max(FractionDigits, SignificantDigits - integerPartLen);
-            const double eps = 0.000000000001;
-            var rounded = Math.Round(fractionPart, fractionDigit);
-            var needFormatting = Math.Abs(rounded - fractionPart) < eps;
+            var rounded = Math.Round(value, fractionDigit, MidpointRounding.AwayFromZero);
+            var needFormatting = value == rounded;
             // string.Format(value, "0.00#######") is a way to format # must be sufficient.
-            var formattedFractionPart = needFormatting ? fractionPart.ToString($"F{fractionDigit}") : fractionPart.ToString();
-            formattedFractionPart = formattedFractionPart.Substring(1);
+            var formattedFractionPart = needFormatting ? value.ToString($"F{fractionDigit}") : value.ToString();
+            var indexOfDecimalSeperator = formattedFractionPart.LastIndexOf(numberDecimalSeparator);
+
+            if (indexOfDecimalSeperator == -1)
+            {
+                formattedFractionPart = string.Empty;
+            }
+            else
+            {
+                formattedFractionPart = formattedFractionPart.Substring(indexOfDecimalSeperator);
+            }
 
             var formattedIntegerPart = string.Empty;
 
@@ -211,7 +219,6 @@ namespace Windows.Globalization.NumberFormatting
             if (IsDecimalPointAlwaysDisplayed &&
                 formattedFractionPart == string.Empty)
             {
-                const string numberDecimalSeparator = ".";
                 formatted += numberDecimalSeparator;
             }
 
@@ -221,14 +228,6 @@ namespace Windows.Globalization.NumberFormatting
             }
 
             return formatted;
-        }
-
-        private static int GetIntegerLength(int integerPart)
-        {
-            if (integerPart == 0)
-                return 1;
-
-            return (int)Math.Floor(Math.Log10(Math.Abs(integerPart))) + 1;
         }
 
 #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
@@ -245,12 +244,51 @@ namespace Windows.Globalization.NumberFormatting
             throw new global::System.NotImplementedException("The member ulong? DecimalFormatter.ParseUInt(string text) is not implemented in Uno.");
         }
 #endif
-#if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
-        [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
         public double? ParseDouble(string text)
         {
-            throw new global::System.NotImplementedException("The member double? DecimalFormatter.ParseDouble(string text) is not implemented in Uno.");
+            var numberFormat = CultureInfo.InvariantCulture.NumberFormat;
+
+            var decimalSeperatorIndex = text.LastIndexOf(numberFormat.NumberDecimalSeparator);
+            var groupSize = numberFormat.NumberGroupSizes[0];
+            var groupSeperatorLength = numberFormat.NumberGroupSeparator.Length;
+            var groupSeperator = numberFormat.NumberGroupSeparator;
+            
+            var preIndex = text.IndexOf(groupSeperator);
+            var Index = -1;
+            
+            if (preIndex != -1)
+            {
+                while (preIndex + groupSeperatorLength < text.Length)
+                {
+                    Index = text.IndexOf(groupSeperator, preIndex + groupSeperatorLength);
+
+                    if (Index == -1)
+                    {
+                        if (decimalSeperatorIndex - preIndex - groupSeperatorLength != groupSize)
+                        {
+                            return null;
+                        }
+
+                        break;
+                    }
+                    else if (Index - preIndex != groupSize)
+                    {
+                        return null;
+                    }
+
+                    preIndex = Index;
+                }
+            }
+
+            var value = double.Parse(text, numberFormat);
+
+            if (value == 0 &&
+                text.Contains(minusSign))
+            {
+                return -0d;
+            }
+
+            return value;
         }
-#endif
     }
 }

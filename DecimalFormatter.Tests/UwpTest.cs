@@ -127,6 +127,44 @@ namespace DecimalFormatter.Tests.UWP
              */
         }
 
-        
+        [DataTestMethod]
+        [DataRow("1.2", false, 1.2)]
+        [DataRow("1.20", false, 1.2)]
+        [DataRow("1234.2", true, 1234.2)]
+        [DataRow("1,234.2", true, 1234.2)]
+        [DataRow("12,34.2", true, null)]
+        [DataRow("12,34.2", false, null)]
+        [DataRow("0", false, 0d)]
+        public void When_ParseDouble(string value, bool isGrouped, double? expected)
+        {
+            WS.DecimalFormatter df = new WS.DecimalFormatter();
+            df.FractionDigits = 2;
+            df.IsGrouped = isGrouped;
+
+            var actual = df.ParseDouble(value);
+            
+            if (actual.HasValue)
+            {
+                bool isNegative = BitConverter.DoubleToInt64Bits(actual.Value) < 0;
+            }
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void When_ParseDoubleMinusZero()
+        {
+            WS.DecimalFormatter df = new WS.DecimalFormatter();
+            var actual = df.ParseDouble("-0");
+            bool isNegative = false;
+
+            if (actual.HasValue)
+            {
+                isNegative = BitConverter.DoubleToInt64Bits(actual.Value) < 0;
+            }
+
+            Assert.AreEqual(true, isNegative);
+        }
+
     }
 }
