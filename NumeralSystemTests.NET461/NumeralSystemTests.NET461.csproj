@@ -55,10 +55,15 @@
     <Compile Include="..\DecimalFormatter.Tests.NET461\NotImplementedAttribute.cs">
       <Link>NotImplementedAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\NumeralSystemTests.Uwp\Given_NumeralSystemTranslator.cs">
+    <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_NumeralSystemTranslator.cs">
       <Link>Given_NumeralSystemTranslator.cs</Link>
     </Compile>
-    <Compile Include="NumeralSystemTranslator.cs" />
+    <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs">
+      <Link>Generated\NumeralSystemTranslator.cs</Link>
+    </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\NumeralSystemTranslator.cs">
+      <Link>Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
