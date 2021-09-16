@@ -64,6 +64,7 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\NumeralSystemTranslator.cs">
       <Link>Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs</Link>
     </Compile>
+    <Compile Include="NumeralSystemTranslatorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
