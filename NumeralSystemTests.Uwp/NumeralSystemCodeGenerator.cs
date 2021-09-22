@@ -21,7 +21,6 @@ namespace NumeralSystemTests.Uwp
             var languageTags = File.ReadAllLines(address);
 
             var stringBuilder = new StringBuilder();
-            int count = 0;
 
             foreach (var languageTag in languageTags)
             {
@@ -29,16 +28,16 @@ namespace NumeralSystemTests.Uwp
                 {
                     var translator = new NumeralSystemTranslator(new string[] { languageTag });
                     var numeralSystem = translator.NumeralSystem;
-                    stringBuilder.AppendLine($"{{ \"{languageTag}\", \"{numeralSystem}\" }},");
-                    count++;
+
+                    stringBuilder.AppendLine($"case \"{languageTag.ToLowerInvariant()}\":");
+                    stringBuilder.AppendLine($"\treturn \"{numeralSystem}\";");
+
                 }
                 catch (ArgumentException)
                 {
-                    stringBuilder.AppendLine($"// {{ \"{languageTag}\", \"\" }}, throws exception");
                 }
             }
 
-            stringBuilder.AppendLine(count.ToString());
             File.WriteAllText(exportAddress, stringBuilder.ToString());
         }
 
@@ -50,7 +49,6 @@ namespace NumeralSystemTests.Uwp
             var languageTags = File.ReadAllLines(address);
 
             var stringBuilder = new StringBuilder();
-            int count = 0;
 
             foreach (var languageTag in languageTags)
             {
@@ -58,16 +56,15 @@ namespace NumeralSystemTests.Uwp
                 {
                     var translator = new NumeralSystemTranslator(new string[] { languageTag });
                     var resolvedLanguage = translator.ResolvedLanguage;
-                    stringBuilder.AppendLine($"{{ \"{languageTag}\", \"{resolvedLanguage}\" }},");
-                    count++;
+
+                    stringBuilder.AppendLine($"case \"{languageTag.ToLowerInvariant()}\":");
+                    stringBuilder.AppendLine($"\treturn \"{resolvedLanguage}\";");
                 }
                 catch (ArgumentException)
                 {
-                    stringBuilder.AppendLine($"// {{ \"{languageTag}\", \"\" }}, throws exception");
                 }
             }
 
-            stringBuilder.AppendLine(count.ToString());
             File.WriteAllText(exportAddress, stringBuilder.ToString());
         }
 
