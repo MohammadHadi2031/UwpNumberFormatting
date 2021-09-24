@@ -81,17 +81,66 @@ namespace NumeralSystemTests.Uwp
             {
                 var fields = line.Split(',');
                 var numeralSystem = fields[0];
-                stringBuilder.Append($"{{ \"{numeralSystem}\", new char[] {{ ");
+                stringBuilder.Append($"private static readonly char[] {numeralSystem}Digits = new char[] {{ ");
                 for (int i = 2; i < 11; i++)
                 {
                     stringBuilder.Append($"'{GetUnicodeChar(fields[i])}', ");
                 }
                 stringBuilder.Append($"'{GetUnicodeChar(fields[11])}'");
-                stringBuilder.AppendLine(" } },");
+                stringBuilder.AppendLine(" };");
             }
 
             File.WriteAllText(exportAddress, stringBuilder.ToString());
+
+            // private readonly ArabDigits = new char[] { ... };
         }
+
+        [TestMethod]
+        public void GenerateDigitsSwitchCase()
+        {
+            var exportAddress = Path.Combine(ApplicationData.Current.LocalFolder.Path, "digitsSwitchCase.cs");
+            var address = Path.Combine(ApplicationData.Current.LocalFolder.Path, "numeralSystemCharacters.csv");
+            var lines = File.ReadAllLines(address);
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (var line in lines)
+            {
+                var fields = line.Split(',');
+                var numeralSystem = fields[0];
+                stringBuilder.AppendLine($"case \"{numeralSystem}\":");
+                stringBuilder.AppendLine($"\treturn {numeralSystem}Digits;");
+            }
+
+            File.WriteAllText(exportAddress, stringBuilder.ToString());
+
+            // case "Arab":
+            //      return ArabDigits;
+        }
+
+        [TestMethod]
+        public void GenerateToPascalCaseSwitchCase()
+        {
+            var exportAddress = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ToPascalCase.cs");
+            var address = Path.Combine(ApplicationData.Current.LocalFolder.Path, "numeralSystemCharacters.csv");
+            var lines = File.ReadAllLines(address);
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (var line in lines)
+            {
+                var fields = line.Split(',');
+                var numeralSystem = fields[0];
+                stringBuilder.AppendLine($"case \"{numeralSystem.ToLowerInvariant()}\":");
+                stringBuilder.AppendLine($"\treturn \"{numeralSystem}\";");
+            }
+
+            File.WriteAllText(exportAddress, stringBuilder.ToString());
+
+            // case "arab":
+            //      return "Arab";
+        }
+
 
         private string GetUnicodeChar(string input)
         {
@@ -115,7 +164,7 @@ namespace NumeralSystemTests.Uwp
                     var translator = new NumeralSystemTranslator(new string[] { languageTag });
                     var numeralSystem = translator.NumeralSystem;
                     var reslovedLanguage = translator.ResolvedLanguage;
-                    stringBuilder.AppendLine($"yield return new object[] {{ \"{languageTag}\", \"{numeralSystem}\", \"{reslovedLanguage}\" }};");
+                    stringBuilder.AppendLine($"[DataRow(\"{languageTag}\", \"{numeralSystem}\", \"{reslovedLanguage}\")]");
                 }
                 catch (ArgumentException)
                 {
@@ -160,6 +209,25 @@ namespace NumeralSystemTests.Uwp
                 stringBuilder.AppendLine($"When_NumeralSystemIsSpecific(value, expected, \"{numeralSystem}\");");
                 stringBuilder.AppendLine("}");
                 stringBuilder.AppendLine();
+            }
+
+            File.WriteAllText(exportAddress, stringBuilder.ToString());
+        }
+
+        [TestMethod]
+        public void GenerateNumeralSystemCaseIsNotStandard()
+        {
+            var exportAddress = Path.Combine(ApplicationData.Current.LocalFolder.Path, "NumeralSystemCaseIsNotStandardTest.cs");
+            var address = Path.Combine(ApplicationData.Current.LocalFolder.Path, "numeralSystemCharacters.csv");
+            var lines = File.ReadAllLines(address);
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (var line in lines)
+            {
+                var fields = line.Split(',');
+                var numeralSystem = fields[0];
+                stringBuilder.AppendLine($"[DataRow(\"{numeralSystem.ToUpperInvariant()}\", \"{numeralSystem}\")]");
             }
 
             File.WriteAllText(exportAddress, stringBuilder.ToString());
