@@ -3,49 +3,23 @@ using System.Globalization;
 
 namespace Windows.Globalization.NumberFormatting
 {
-    public partial class DecimalFormatter :
-        global::Windows.Globalization.NumberFormatting.INumberFormatterOptions,
-        global::Windows.Globalization.NumberFormatting.INumberFormatter,
-        global::Windows.Globalization.NumberFormatting.INumberFormatter2,
-        global::Windows.Globalization.NumberFormatting.INumberParser,
-        global::Windows.Globalization.NumberFormatting.ISignificantDigitsOption,
-        global::Windows.Globalization.NumberFormatting.INumberRounderOption,
-        global::Windows.Globalization.NumberFormatting.ISignedZeroOption
+    public partial class DecimalFormatter : INumberFormatterOptions, INumberFormatter, INumberFormatter2, INumberParser, ISignificantDigitsOption, INumberRounderOption, ISignedZeroOption
     {
-        const string minusSign = "-";
+        private NumeralSystemTranslator _translator = new NumeralSystemTranslator();
 
-        public bool IsDecimalPointAlwaysDisplayed
-        {
-            get;
-            set;
-        }
+        public bool IsDecimalPointAlwaysDisplayed { get; set; }
 
-        public int IntegerDigits
-        {
-            get;
-            set;
-        } = 1;
+        public int IntegerDigits { get; set; } = 1;
 
-        public bool IsGrouped
-        {
-            get;
-            set;
-        }
+        public bool IsGrouped { get; set; }
 
-#if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
-        [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
         public string NumeralSystem
         {
-            get;
-            set;
+            get => _translator.NumeralSystem;
+            set => _translator.NumeralSystem = value;
         }
-#endif
 
-        public int FractionDigits
-        {
-            get;
-            set;
-        } = 2;
+        public int FractionDigits { get; set; } = 2;
 
 #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
         [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
@@ -79,31 +53,11 @@ namespace Windows.Globalization.NumberFormatting
         }
 #endif
 
-        public global::Windows.Globalization.NumberFormatting.INumberRounder NumberRounder
-        {
-            get;
-            set;
-        }
+        public INumberRounder NumberRounder { get; set; }
 
-        public bool IsZeroSigned
-        {
-            get;
-            set;
-        }
+        public bool IsZeroSigned { get; set; }
 
-        public int SignificantDigits
-        {
-            get;
-            set;
-        } = 0;
-
-#if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
-        [global::Uno.NotImplemented("__ANDROID__", "__IOS__", "NET461", "__WASM__", "__SKIA__", "__NETSTD_REFERENCE__", "__MACOS__")]
-        public DecimalFormatter(global::System.Collections.Generic.IEnumerable<string> languages, string geographicRegion)
-        {
-            global::Windows.Foundation.Metadata.ApiInformation.TryRaiseNotImplemented("Windows.Globalization.NumberFormatting.DecimalFormatter", "DecimalFormatter.DecimalFormatter(IEnumerable<string> languages, string geographicRegion)");
-        }
-#endif
+        public int SignificantDigits { get; set; } = 0;
 
         public DecimalFormatter()
         {
@@ -152,9 +106,6 @@ namespace Windows.Globalization.NumberFormatting
 
         public string FormatDouble(double value)
         {
-            const string numberDecimalSeparator = ".";
-            
-
             if (NumberRounder != null)
             {
                 value = NumberRounder.RoundDouble(value);
@@ -166,22 +117,68 @@ namespace Windows.Globalization.NumberFormatting
                 IntegerDigits == 0 &&
                 FractionDigits == 0)
             {
-                if (isNegative)
-                    return minusSign + "0";
+                if (isNegative && IsZeroSigned)
+                    return CultureInfo.InvariantCulture.NumberFormat.NegativeSign + "0";
                 else
                     return "0";
             }
 
-            var integerPart = (int)Math.Truncate(value);
-
             bool addMinusSign = isNegative && value == 0;
 
+            var formattedFractionPart = FormatFractionPart(value);
+            var formattedIntegerPart = FormatIntegerPart(value);
+            var formatted = formattedIntegerPart + formattedFractionPart;
+
+            if (IsDecimalPointAlwaysDisplayed &&
+                formattedFractionPart == string.Empty)
+            {
+                formatted += CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator;
+            }
+
+            if (addMinusSign && IsZeroSigned)
+            {
+                formatted = CultureInfo.InvariantCulture.NumberFormat.NegativeSign + formatted;
+            }
+
+            formatted = _translator.TranslateNumerals(formatted);
+            return formatted;
+        }
+
+        private string FormatIntegerPart(double value)
+        {
+            var integerPart = (int)Math.Truncate(value);
+            var formattedIntegerPart = string.Empty;
+
+            if (integerPart == 0 &&
+                IntegerDigits == 0)
+            {
+                return string.Empty;
+            }
+            else if (IsGrouped)
+            {
+                var zeros = "";
+                for (int i = 0; i < IntegerDigits - 1; i++)
+                {
+                    zeros += "0";
+                }
+                return integerPart.ToString(zeros + ",0", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                return integerPart.ToString($"D{IntegerDigits}", CultureInfo.InvariantCulture);
+            }
+        }
+
+        private string FormatFractionPart(double value)
+        {
+            var numberDecimalSeparator = CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator;
+
+            var integerPart = (int)Math.Truncate(value);
             var integerPartLen = integerPart.GetLength();
             var fractionDigit = Math.Max(FractionDigits, SignificantDigits - integerPartLen);
             var rounded = Math.Round(value, fractionDigit, MidpointRounding.AwayFromZero);
-            var needFormatting = value == rounded;
-            // string.Format(value, "0.00#######") is a way to format # must be sufficient.
-            var formattedFractionPart = needFormatting ? value.ToString($"F{fractionDigit}") : value.ToString();
+            var needZeros = value == rounded;
+            var formattedFractionPart = needZeros ? value.ToString($"F{fractionDigit}", CultureInfo.InvariantCulture) : value.ToString(CultureInfo.InvariantCulture);
             var indexOfDecimalSeperator = formattedFractionPart.LastIndexOf(numberDecimalSeparator);
 
             if (indexOfDecimalSeperator == -1)
@@ -193,41 +190,7 @@ namespace Windows.Globalization.NumberFormatting
                 formattedFractionPart = formattedFractionPart.Substring(indexOfDecimalSeperator);
             }
 
-            var formattedIntegerPart = string.Empty;
-
-            if (integerPart == 0 &&
-                IntegerDigits == 0)
-            {
-                formattedIntegerPart = string.Empty;
-            }
-            else if (IsGrouped)
-            {
-                var zeros = "";
-                for (int i = 0; i < IntegerDigits - 1; i++)
-                {
-                    zeros += "0";
-                }
-                formattedIntegerPart = integerPart.ToString(zeros + ",0");
-            }
-            else
-            {
-                formattedIntegerPart = integerPart.ToString($"D{IntegerDigits}");
-            }
-
-            var formatted = formattedIntegerPart + formattedFractionPart;
-
-            if (IsDecimalPointAlwaysDisplayed &&
-                formattedFractionPart == string.Empty)
-            {
-                formatted += numberDecimalSeparator;
-            }
-
-            if (addMinusSign)
-            {
-                formatted = minusSign + formatted;
-            }
-
-            return formatted;
+            return formattedFractionPart;
         }
 
 #if __ANDROID__ || __IOS__ || NET461 || __WASM__ || __SKIA__ || __NETSTD_REFERENCE__ || __MACOS__
@@ -246,16 +209,35 @@ namespace Windows.Globalization.NumberFormatting
 #endif
         public double? ParseDouble(string text)
         {
-            var numberFormat = CultureInfo.InvariantCulture.NumberFormat;
+            text = _translator.TranslateBackNumerals(text);
 
+            if (HasInvalidGroupSize(text))
+            {
+                return null;
+            }
+
+           double.TryParse(text, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out double value);
+
+            if (value == 0 &&
+                text.Contains(CultureInfo.InvariantCulture.NumberFormat.NegativeSign))
+            {
+                return -0d;
+            }
+
+            return value;
+        }
+
+        private bool HasInvalidGroupSize(string text)
+        {
+            var numberFormat = CultureInfo.InvariantCulture.NumberFormat;
             var decimalSeperatorIndex = text.LastIndexOf(numberFormat.NumberDecimalSeparator);
             var groupSize = numberFormat.NumberGroupSizes[0];
             var groupSeperatorLength = numberFormat.NumberGroupSeparator.Length;
             var groupSeperator = numberFormat.NumberGroupSeparator;
-            
+
             var preIndex = text.IndexOf(groupSeperator);
             var Index = -1;
-            
+
             if (preIndex != -1)
             {
                 while (preIndex + groupSeperatorLength < text.Length)
@@ -266,29 +248,21 @@ namespace Windows.Globalization.NumberFormatting
                     {
                         if (decimalSeperatorIndex - preIndex - groupSeperatorLength != groupSize)
                         {
-                            return null;
+                            return true;
                         }
 
                         break;
                     }
                     else if (Index - preIndex != groupSize)
                     {
-                        return null;
+                        return true;
                     }
 
                     preIndex = Index;
                 }
             }
 
-            var value = double.Parse(text, numberFormat);
-
-            if (value == 0 &&
-                text.Contains(minusSign))
-            {
-                return -0d;
-            }
-
-            return value;
+            return false;
         }
     }
 }

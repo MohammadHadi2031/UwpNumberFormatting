@@ -65,6 +65,14 @@ namespace DecimalFormatter.Tests.UWP
         [DataRow(-0d, 2, 0, true, "-00")]
         [DataRow(0d, 3, 1, true, "000.0")]
         [DataRow(-0d, 3, 1, true, "-000.0")]
+        [DataRow(0d, 0, 0, false, "0")]
+        [DataRow(-0d, 0, 0, false, "0")]
+        [DataRow(0d, 0, 2, false, ".00")]
+        [DataRow(-0d, 0, 2, false, ".00")]
+        [DataRow(0d, 2, 0, false, "00")]
+        [DataRow(-0d, 2, 0, false, "00")]
+        [DataRow(0d, 3, 1, false, "000.0")]
+        [DataRow(-0d, 3, 1, false, "000.0")]
         public void Test_IsZeroSigned(double value, int integerDigits, int fractionDigits, bool isZeroSigned, string expected)
         {
             WS.DecimalFormatter df = new WS.DecimalFormatter();
@@ -172,7 +180,10 @@ namespace DecimalFormatter.Tests.UWP
             WS.DecimalFormatter df = new WS.DecimalFormatter();
             df.NumeralSystem = "ArabExt";
 
-            var value = df.ParseDouble("۱.۲");
+            var translator = new NumeralSystemTranslator { NumeralSystem = "ArabExt" };
+            var translated = translator.TranslateNumerals("1.2");
+
+            var value = df.ParseDouble(translated);
             Assert.AreEqual(1.2d, value);
         }
     }
