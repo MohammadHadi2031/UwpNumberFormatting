@@ -11,8 +11,9 @@ namespace TestStringFormat
         [TestMethod]
         public void TestMethod1()
         {
-            var a = double.Parse("12,34.5",
-                CultureInfo.InvariantCulture.NumberFormat);
+            var cultureInfo = new CultureInfo("zh-cmn-Hans");
+            var DisplayName = cultureInfo.DisplayName;
+            var NativeName = cultureInfo.NativeName;
         }
     }
 }

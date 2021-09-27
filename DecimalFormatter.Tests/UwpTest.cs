@@ -166,5 +166,14 @@ namespace DecimalFormatter.Tests.UWP
             Assert.AreEqual(true, isNegative);
         }
 
+        [TestMethod]
+        public void PlayGround()
+        {
+            WS.DecimalFormatter df = new WS.DecimalFormatter();
+            df.NumeralSystem = "ArabExt";
+
+            var value = df.ParseDouble("۱.۲");
+            Assert.AreEqual(1.2d, value);
+        }
     }
 }
