@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStringFormat", "TestStringFormat\TestStringFormat.csproj", "{9F707CDA-678B-4E5F-AF7A-B5E6D0D74FCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecimalFormatter.Tests.UWP", "DecimalFormatter.Tests\DecimalFormatter.Tests.UWP.csproj", "{CDEA35E2-FD69-4F14-A157-7152EFD10078}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecimalFormatterTests.UWP", "DecimalFormatter.Tests\DecimalFormatterTests.UWP.csproj", "{CDEA35E2-FD69-4F14-A157-7152EFD10078}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecimalFormatter.Tests.NET461", "DecimalFormatter.Tests.NET461\DecimalFormatter.Tests.NET461.csproj", "{1DF04FEA-7C5A-4907-93B3-0B0AFA601116}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecimalFormatterTests.NET461", "DecimalFormatter.Tests.NET461\DecimalFormatterTests.NET461.csproj", "{1DF04FEA-7C5A-4907-93B3-0B0AFA601116}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumeralSystemTests.NET461", "NumeralSystemTests.NET461\NumeralSystemTests.NET461.csproj", "{8D0593F8-D3EE-47E2-BFCB-8E0C351C6C65}"
 EndProject

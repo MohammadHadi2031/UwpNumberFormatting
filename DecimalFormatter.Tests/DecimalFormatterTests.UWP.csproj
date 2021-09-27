@@ -7,8 +7,8 @@
     <ProjectGuid>{CDEA35E2-FD69-4F14-A157-7152EFD10078}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DecimalFormatter.Tests.UWP</RootNamespace>
-    <AssemblyName>DecimalFormatter.Tests.UWP</AssemblyName>
+    <RootNamespace>DecimalFormatterTests.UWP</RootNamespace>
+    <AssemblyName>DecimalFormatterTests.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
@@ -129,7 +129,7 @@
     <Compile Include="UnitTestApp.xaml.cs">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UwpTest.cs" />
+    <Compile Include="Given_DecimalFormatter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml">

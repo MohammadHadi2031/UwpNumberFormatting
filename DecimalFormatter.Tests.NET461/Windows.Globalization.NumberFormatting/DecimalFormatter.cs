@@ -175,10 +175,10 @@ namespace Windows.Globalization.NumberFormatting
 
             var integerPart = (int)Math.Truncate(value);
             var integerPartLen = integerPart.GetLength();
-            var fractionDigit = Math.Max(FractionDigits, SignificantDigits - integerPartLen);
-            var rounded = Math.Round(value, fractionDigit, MidpointRounding.AwayFromZero);
+            var fractionDigits = Math.Max(FractionDigits, SignificantDigits - integerPartLen);
+            var rounded = Math.Round(value, fractionDigits, MidpointRounding.AwayFromZero);
             var needZeros = value == rounded;
-            var formattedFractionPart = needZeros ? value.ToString($"F{fractionDigit}", CultureInfo.InvariantCulture) : value.ToString(CultureInfo.InvariantCulture);
+            var formattedFractionPart = needZeros ? value.ToString($"F{fractionDigits}", CultureInfo.InvariantCulture) : value.ToString(CultureInfo.InvariantCulture);
             var indexOfDecimalSeperator = formattedFractionPart.LastIndexOf(numberDecimalSeparator);
 
             if (indexOfDecimalSeperator == -1)

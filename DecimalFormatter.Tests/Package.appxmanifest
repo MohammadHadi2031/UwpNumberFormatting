@@ -12,7 +12,7 @@
   <mp:PhoneIdentity PhoneProductId="4a290bd5-b91f-42f1-803c-d7ecde3060ac" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>DecimalFormatter.Tests</DisplayName>
+    <DisplayName>DecimalFormatterTests</DisplayName>
     <PublisherDisplayName>Hadi</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -27,12 +27,12 @@
   <Applications>
     <Application Id="vstest.executionengine.universal.App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="DecimalFormatter.Tests.App">
+        EntryPoint="DecimalFormatterTests.App">
       <uap:VisualElements
-        DisplayName="DecimalFormatter.Tests"
+        DisplayName="DecimalFormatterTests"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="DecimalFormatter.Tests"
+        Description="DecimalFormatterTests"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
