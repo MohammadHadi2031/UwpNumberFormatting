@@ -8,12 +8,16 @@ namespace Uno.UI.Tests.Windows_Globalization
 	[TestClass]
 	public class Given_DecimalFormatter
 	{
-		[TestMethod]
-		public void When_FormatSpecialDouble()
+		[DataTestMethod]
+		[DataRow(double.PositiveInfinity, "∞")]
+		[DataRow(double.NegativeInfinity, "-∞")]
+		[DataRow(double.NaN, "NaN")]
+		public void When_FormatSpecialDouble(double value, string expected)
 		{
 			DecimalFormatter df = new DecimalFormatter();
-			var actual = df.FormatDouble(double.PositiveInfinity);
+			var actual = df.FormatDouble(value);
 
+			Assert.AreEqual(expected, actual);
 		}
 
 		[DataTestMethod]
@@ -188,17 +192,52 @@ namespace Uno.UI.Tests.Windows_Globalization
 			Assert.AreEqual(true, isNegative);
 		}
 
-		[TestMethod]
-		public void When_ParseArabExtDouble()
+		[DataTestMethod]
+		[DataRow("Arab")]
+		[DataRow("ArabExt")]
+		[DataRow("Bali")]
+		[DataRow("Beng")]
+		[DataRow("Cham")]
+		[DataRow("Deva")]
+		[DataRow("FullWide")]
+		[DataRow("Gujr")]
+		[DataRow("Guru")]
+		[DataRow("Java")]
+		[DataRow("Kali")]
+		[DataRow("Khmr")]
+		[DataRow("Knda")]
+		[DataRow("Lana")]
+		[DataRow("LanaTham")]
+		[DataRow("Laoo")]
+		[DataRow("Latn")]
+		[DataRow("Lepc")]
+		[DataRow("Limb")]
+		[DataRow("Mlym")]
+		[DataRow("Mong")]
+		[DataRow("Mtei")]
+		[DataRow("Mymr")]
+		[DataRow("MymrShan")]
+		[DataRow("Nkoo")]
+		[DataRow("Olck")]
+		[DataRow("Orya")]
+		[DataRow("Saur")]
+		[DataRow("Sund")]
+		[DataRow("Talu")]
+		[DataRow("TamlDec")]
+		[DataRow("Telu")]
+		[DataRow("Thai")]
+		[DataRow("Tibt")]
+		[DataRow("Vaii")]
+		public void When_ParseDoubleUsingSpeceficNumeralSystem(string numeralSystem)
 		{
 			DecimalFormatter df = new DecimalFormatter();
-			df.NumeralSystem = "ArabExt";
+			df.NumeralSystem = numeralSystem;
 
-			var translator = new NumeralSystemTranslator { NumeralSystem = "ArabExt" };
-			var translated = translator.TranslateNumerals("1.2");
+			var translator = new NumeralSystemTranslator { NumeralSystem = numeralSystem };
+			var translated = translator.TranslateNumerals("1234.56789");
 
 			var actual = df.ParseDouble(translated);
-			Assert.AreEqual(1.2d, actual);
+			Assert.AreEqual(1234.56789, actual);
 		}
 
 		[TestMethod]

@@ -232,5 +232,24 @@ namespace NumeralSystemTests.Uwp
 
             File.WriteAllText(exportAddress, stringBuilder.ToString());
         }
+
+        [TestMethod]
+        public void GenerateParseDoubleNumeralSystemTestData()
+        {
+            var exportAddress = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ParseDoubleNumeralSystemTest.cs");
+            var address = Path.Combine(ApplicationData.Current.LocalFolder.Path, "numeralSystemCharacters.csv");
+            var lines = File.ReadAllLines(address);
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (var line in lines)
+            {
+                var fields = line.Split(',');
+                var numeralSystem = fields[0];
+                stringBuilder.AppendLine($"[DataRow(\"{numeralSystem}\")]");
+            }
+
+            File.WriteAllText(exportAddress, stringBuilder.ToString());
+        }
     }
 }

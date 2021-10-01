@@ -15,7 +15,7 @@ namespace TestStringFormat
             //var DisplayName = cultureInfo.DisplayName;
             //var NativeName = cultureInfo.NativeName;
 
-            var a = 1.512945d.ToString("0.###");
+            var a = double.PositiveInfinity.ToString();
         }
     }
 }

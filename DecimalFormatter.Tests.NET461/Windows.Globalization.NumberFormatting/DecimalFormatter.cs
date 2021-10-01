@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace Windows.Globalization.NumberFormatting
@@ -106,6 +106,21 @@ namespace Windows.Globalization.NumberFormatting
 
 		public string FormatDouble(double value)
 		{
+			if (double.IsNaN(value))
+			{
+				return "NaN";
+			}
+
+			if (double.IsPositiveInfinity(value))
+			{
+				return "∞";
+			}
+
+			if (double.IsNegativeInfinity(value))
+			{
+				return "-∞";
+			}
+
 			if (NumberRounder != null)
 			{
 				value = NumberRounder.RoundDouble(value);
