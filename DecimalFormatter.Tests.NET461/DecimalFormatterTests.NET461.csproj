@@ -66,7 +66,7 @@
       <Link>Generated\Windows.Globalization.NumberFormatting\DecimalFormatter.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\IncrementNumberRounder.cs">
-      <Link>Genrated\Windows.Globalization.NumberFormatting\IncrementNumberRounder.cs</Link>
+      <Link>Generated\Windows.Globalization.NumberFormatting\IncrementNumberRounder.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberFormatter.cs">
       <Link>Generated\Windows.Globalization.NumberFormatting\INumberFormatter.cs</Link>
@@ -81,7 +81,7 @@
       <Link>Generated\Windows.Globalization.NumberFormatting\INumberParser.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberRounder.cs">
-      <Link>Genrated\Windows.Globalization.NumberFormatting\INumberRounder.cs</Link>
+      <Link>Generated\Windows.Globalization.NumberFormatting\INumberRounder.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberRounderOption.cs">
       <Link>Generated\Windows.Globalization.NumberFormatting\INumberRounderOption.cs</Link>
@@ -92,11 +92,14 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\ISignificantDigitsOption.cs">
       <Link>Generated\Windows.Globalization.NumberFormatting\ISignificantDigitsOption.cs</Link>
     </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs">
+      <Link>Generated\Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs</Link>
+    </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs">
-      <Link>Genrated\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs</Link>
+      <Link>Generated\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs">
-      <Link>Genrated\Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs</Link>
+      <Link>Generated\Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\DecimalFormatter.cs">
       <Link>Windows.Globalization.NumberFormatting\DecimalFormatter.cs</Link>
