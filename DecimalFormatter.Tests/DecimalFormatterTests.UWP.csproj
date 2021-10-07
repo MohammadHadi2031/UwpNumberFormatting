@@ -125,6 +125,9 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_IncrementNumberRounder.cs">
       <Link>Given_IncrementNumberRounder.cs</Link>
     </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_NumeralSystemTranslator.cs">
+      <Link>Given_NumeralSystemTranslator.cs</Link>
+    </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_SignificantDigitsNumberRounder.cs">
       <Link>Given_SignificantDigitsNumberRounder.cs</Link>
     </Compile>
@@ -159,10 +162,10 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.2.3</Version>
+      <Version>2.2.7</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>2.2.3</Version>
+      <Version>2.2.7</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
