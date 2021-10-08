@@ -25,5 +25,12 @@ namespace DecimalFormatterTests.UWP
             var actual = formatter.FormatDouble(1.5);
         }
 
+        [TestMethod]
+        public void Test3()
+        {
+            var formatter = new PermilleFormatter();
+            var actual = formatter.FormatDouble(1.5);
+        }
+
     }
 }
