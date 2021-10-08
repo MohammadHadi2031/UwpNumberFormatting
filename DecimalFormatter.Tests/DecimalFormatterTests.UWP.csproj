@@ -131,6 +131,9 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_PercentFormatter.cs">
       <Link>Given_PercentFormatter.cs</Link>
     </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_PermilleFormatter.cs">
+      <Link>Given_PermilleFormatter.cs</Link>
+    </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_SignificantDigitsNumberRounder.cs">
       <Link>Given_SignificantDigitsNumberRounder.cs</Link>
     </Compile>

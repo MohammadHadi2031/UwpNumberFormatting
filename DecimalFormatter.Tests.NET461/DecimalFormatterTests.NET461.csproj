@@ -67,6 +67,9 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_PercentFormatter.cs">
       <Link>Given_PercentFormatter.cs</Link>
     </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_PermilleFormatter.cs">
+      <Link>Given_PermilleFormatter.cs</Link>
+    </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_Rounder.cs">
       <Link>Given_Rounder.cs</Link>
     </Compile>
@@ -108,6 +111,9 @@
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\PercentFormatter.cs">
       <Link>Generated\Windows.Globalization.NumberFormatting\PercentFormatter.cs</Link>
+    </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\PermilleFormatter.cs">
+      <Link>Generated\Windows.Globalization.NumberFormatting\PermilleFormatter.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs">
       <Link>Generated\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs</Link>
@@ -159,6 +165,9 @@
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\PercentFormatter.cs">
       <Link>Windows.Globalization.NumberFormatting\PercentFormatter.cs</Link>
+    </Compile>
+    <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\PermilleFormatter.cs">
+      <Link>Windows.Globalization.NumberFormatting\PermilleFormatter.cs</Link>
     </Compile>
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\Rounder.cs">
       <Link>Windows.Globalization.NumberFormatting\Rounder.cs</Link>
