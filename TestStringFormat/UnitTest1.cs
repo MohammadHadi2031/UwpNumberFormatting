@@ -14,8 +14,8 @@ namespace TestStringFormat
             //var cultureInfo = new CultureInfo("zh-cmn-Hans");
             //var DisplayName = cultureInfo.DisplayName;
             //var NativeName = cultureInfo.NativeName;
-
-            var a = double.PositiveInfinity.ToString();
+            var regionInfo = new RegionInfo("ir");
+            var ss = 0.ToString($"D0", CultureInfo.InvariantCulture);
         }
     }
 }

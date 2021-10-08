@@ -2,75 +2,94 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Uno.Globalization.NumberFormatting;
 
 namespace Windows.Globalization.NumberFormatting
 {
 	public  partial class PercentFormatter : INumberFormatterOptions, INumberFormatter, INumberFormatter2, INumberParser, ISignificantDigitsOption, INumberRounderOption, ISignedZeroOption
 	{
-		private readonly DecimalFormatter _formatter;
+		private readonly FormatterHelper _formatterHelper;
+		private readonly NumeralSystemTranslator _translator;
 
 		public PercentFormatter()
 		{
-			_formatter = new DecimalFormatter();
+			_formatterHelper = new FormatterHelper();
+			_translator = new NumeralSystemTranslator();
 		}
 
-		public bool IsDecimalPointAlwaysDisplayed { get => _formatter.IsDecimalPointAlwaysDisplayed; set => _formatter.IsDecimalPointAlwaysDisplayed = value; }
+		public bool IsDecimalPointAlwaysDisplayed { get => _formatterHelper.IsDecimalPointAlwaysDisplayed; set => _formatterHelper.IsDecimalPointAlwaysDisplayed = value; }
 
-		public int IntegerDigits { get => _formatter.IntegerDigits; set => _formatter.IntegerDigits = value; }
+		public int IntegerDigits { get => _formatterHelper.IntegerDigits; set => _formatterHelper.IntegerDigits = value; }
 
-		public bool IsGrouped { get => _formatter.IsGrouped; set => _formatter.IsGrouped = value; }
+		public bool IsGrouped { get => _formatterHelper.IsGrouped; set => _formatterHelper.IsGrouped = value; }
 
 		public string NumeralSystem
 		{
-			get => _formatter.NumeralSystem;
-			set => _formatter.NumeralSystem = value;
+			get => _translator.NumeralSystem;
+			set => _translator.NumeralSystem = value;
 		}
 
-		public IReadOnlyList<string> Languages => _formatter.Languages;
+		public IReadOnlyList<string> Languages => _translator.Languages;
 
-		public string ResolvedLanguage => _formatter.ResolvedLanguage;
+		public string ResolvedLanguage => _translator.ResolvedLanguage;
 
-		public int FractionDigits { get => _formatter.FractionDigits; set => _formatter.FractionDigits = value; }
+		public int FractionDigits { get => _formatterHelper.FractionDigits; set => _formatterHelper.FractionDigits = value; }
 
-		public INumberRounder NumberRounder { get => _formatter.NumberRounder; set => _formatter.NumberRounder = value; }
+		public INumberRounder NumberRounder { get; set; }
 
-		public bool IsZeroSigned { get => _formatter.IsZeroSigned; set => _formatter.IsZeroSigned = value; }
+		public bool IsZeroSigned { get => _formatterHelper.IsZeroSigned; set => _formatterHelper.IsZeroSigned = value; }
 
-		public int SignificantDigits { get => _formatter.SignificantDigits; set => _formatter.SignificantDigits = value; }
+		public int SignificantDigits { get => _formatterHelper.SignificantDigits; set => _formatterHelper.SignificantDigits = value; }
 
 		public string Format(double value) => FormatDouble(value);
 
 		public string FormatDouble(double value)
 		{
-			if (double.IsNaN(value))
+			if (!_formatterHelper.TryValidate(value, out string text))
 			{
-				return "NaN";
+				return text;
 			}
 
-			if (double.IsPositiveInfinity(value))
+			if (NumberRounder != null)
 			{
-				return "∞";
+				value = NumberRounder.RoundDouble(value);
 			}
 
-			if (double.IsNegativeInfinity(value))
+			string formatted = string.Empty;
+
+			if (value == 0d)
 			{
-				return "-∞";
+				formatted = _formatterHelper.FormatZero(value);
+			}
+			else
+			{
+				formatted = _formatterHelper.FormatDoubleCore(value * 100d);
 			}
 
-			var symbol = "%";
-			if (NumeralSystem.Equals("ArabExt", StringComparison.Ordinal) ||
-				NumeralSystem.Equals("Arab", StringComparison.Ordinal))
-            {
-				symbol = "\u066a";
-            }
-
-			return _formatter.FormatDouble(value * 100) + symbol;	
+			formatted = _translator.TranslateNumerals($"{formatted}%");
+			return formatted;
 		}
 
 
 		public double? ParseDouble(string text)
 		{
-			return _formatter.ParseDouble(text);
+			text = _translator.TranslateBackNumerals(text);
+
+            if (!text.EndsWith(CultureInfo.InvariantCulture.NumberFormat.PercentSymbol, StringComparison.Ordinal))
+            {
+				return null;
+            }
+
+			text = text.Substring(0, text.Length - CultureInfo.InvariantCulture.NumberFormat.PercentSymbol.Length);
+
+			var result = _formatterHelper.ParseDoubleCore(text);
+
+			if (!result.HasValue)
+            {
+				return null;
+            }
+
+			return result / 100d;
 		}
 	}
 }

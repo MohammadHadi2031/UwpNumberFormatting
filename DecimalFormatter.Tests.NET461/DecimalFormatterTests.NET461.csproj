@@ -160,9 +160,11 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UWP\Globalization\NumberFormatting\SignificantDigitsNumberRounder.cs">
       <Link>Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs</Link>
     </Compile>
+    <Compile Include="Generated\Windows.Globalization.NumberFormatting\FormatterHelper.cs" />
     <Compile Include="Generated\Windows.Globalization.NumberFormatting\PercentFormatter.cs" />
     <Compile Include="NotImplementedAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows.Globalization.NumberFormatting\FormatterHelper.cs" />
     <Compile Include="Windows.Globalization.NumberFormatting\PercentFormatter.cs" />
   </ItemGroup>
   <ItemGroup>
