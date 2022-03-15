@@ -119,6 +119,9 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_CurrencyFormatter.cs">
+      <Link>Given_CurrencyFormatter.cs</Link>
+    </Compile>
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_DecimalFormatter.cs">
       <Link>Given_DecimalFormatter.cs</Link>
@@ -138,7 +141,6 @@
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_SignificantDigitsNumberRounder.cs">
       <Link>Given_SignificantDigitsNumberRounder.cs</Link>
     </Compile>
-    <Compile Include="Given_CurrencyFormatter.cs" />
     <Compile Include="PlaygroundTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestApp.xaml.cs">
