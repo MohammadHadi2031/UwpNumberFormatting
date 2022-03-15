@@ -54,7 +54,22 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\CurrencyFormatter.cs">
+      <Link>Generated\Windows.Globalization.NumberFormatting\CurrencyFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs">
+      <Link>Generated\Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs</Link>
+    </Compile>
+    <Compile Include="..\DecimalFormatter.Tests\Given_CurrencyFormatter.cs">
+      <Link>Given_CurrencyFormatter.cs</Link>
+    </Compile>
     <Compile Include="ApiInformation.cs" />
+    <Compile Include="CodeGenerator.cs" />
+    <Compile Include="CurrencyFormatter.cs" />
+    <Compile Include="CurrencyFormatterMode.cs" />
+    <Compile Include="CurrencyHelper.cs" />
+    <Compile Include="CurrencyData.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_DecimalFormatter.cs">
       <Link>Given_DecimalFormatter.cs</Link>
     </Compile>

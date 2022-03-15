@@ -43,7 +43,7 @@ namespace NumberBoxApp1
         {
             if (TestNumberBox != null && NewValueTextBox != null && OldValueTextBox != null)
             {
-                NewValueTextBox.Text = e.NewValue.ToString();
+                //NewValueTextBox.Text = e.NewValue.ToString();
                 OldValueTextBox.Text = e.OldValue.ToString();
             }
         }

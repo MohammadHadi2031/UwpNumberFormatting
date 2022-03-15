@@ -119,6 +119,7 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_DecimalFormatter.cs">
       <Link>Given_DecimalFormatter.cs</Link>
     </Compile>

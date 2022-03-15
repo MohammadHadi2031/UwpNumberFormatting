@@ -21,7 +21,8 @@ namespace DecimalFormatterTests.UWP
         [TestMethod]
         public void Test2()
         {
-            var formatter = new CurrencyFormatter("IRR");
+            var formatter = new CurrencyFormatter("USD");
+            formatter.ApplyRoundingForCurrency(RoundingAlgorithm.RoundHalfToEven);
             var actual = formatter.FormatDouble(1.5);
         }
 
