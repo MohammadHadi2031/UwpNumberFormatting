@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;NET461</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;NET461</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_CurrencyFormatter.cs" Link="Given_CurrencyFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_DecimalFormatter.cs" Link="Given_DecimalFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_IncrementNumberRounder.cs" Link="Given_IncrementNumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_NumeralSystemTranslator.cs" Link="Given_NumeralSystemTranslator.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_PercentFormatter.cs" Link="Given_PercentFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_PermilleFormatter.cs" Link="Given_PermilleFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_Rounder.cs" Link="Given_Rounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_SignificantDigitsNumberRounder.cs" Link="Given_SignificantDigitsNumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\CurrencyFormatter.cs" Link="Generated\Windows.Globalization.NumberFormatting\CurrencyFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs" Link="Generated\Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\DecimalFormatter.cs" Link="Generated\Windows.Globalization.NumberFormatting\DecimalFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\IncrementNumberRounder.cs" Link="Generated\Windows.Globalization.NumberFormatting\IncrementNumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberFormatter.cs" Link="Generated\Windows.Globalization.NumberFormatting\INumberFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberFormatter2.cs" Link="Generated\Windows.Globalization.NumberFormatting\INumberFormatter2.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberFormatterOptions.cs" Link="Generated\Windows.Globalization.NumberFormatting\INumberFormatterOptions.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberParser.cs" Link="Generated\Windows.Globalization.NumberFormatting\INumberParser.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberRounder.cs" Link="Generated\Windows.Globalization.NumberFormatting\INumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\INumberRounderOption.cs" Link="Generated\Windows.Globalization.NumberFormatting\INumberRounderOption.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\ISignedZeroOption.cs" Link="Generated\Windows.Globalization.NumberFormatting\ISignedZeroOption.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\ISignificantDigitsOption.cs" Link="Generated\Windows.Globalization.NumberFormatting\ISignificantDigitsOption.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs" Link="Generated\Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\PercentFormatter.cs" Link="Generated\Windows.Globalization.NumberFormatting\PercentFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\PermilleFormatter.cs" Link="Generated\Windows.Globalization.NumberFormatting\PermilleFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs" Link="Generated\Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs" Link="Generated\Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\CurrencyData.cs" Link="Windows.Globalization.NumberFormatting\CurrencyData.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\CurrencyFormatter.cs" Link="Windows.Globalization.NumberFormatting\CurrencyFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\CurrencyFormatterMode.cs" Link="Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\DecimalFormatter.cs" Link="Windows.Globalization.NumberFormatting\DecimalFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\ExceptionHelper.cs" Link="Windows.Globalization.NumberFormatting\ExceptionHelper.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\Extensions.cs" Link="Windows.Globalization.NumberFormatting\Extensions.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\FormatterHelper.cs" Link="Windows.Globalization.NumberFormatting\FormatterHelper.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\IncrementNumberRounder.cs" Link="Windows.Globalization.NumberFormatting\IncrementNumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\INumberFormatter.cs" Link="Windows.Globalization.NumberFormatting\INumberFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\INumberFormatter2.cs" Link="Windows.Globalization.NumberFormatting\INumberFormatter2.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\INumberFormatterOptions.cs" Link="Windows.Globalization.NumberFormatting\INumberFormatterOptions.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\INumberParser.cs" Link="Windows.Globalization.NumberFormatting\INumberParser.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\INumberRounder.cs" Link="Windows.Globalization.NumberFormatting\INumberRounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\INumberRounderOption.cs" Link="Windows.Globalization.NumberFormatting\INumberRounderOption.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\ISignedZeroOption.cs" Link="Windows.Globalization.NumberFormatting\ISignedZeroOption.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\ISignificantDigitsOption.cs" Link="Windows.Globalization.NumberFormatting\ISignificantDigitsOption.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\MathExtensions.cs" Link="Windows.Globalization.NumberFormatting\MathExtensions.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\NumeralSystemTranslator.cs" Link="Windows.Globalization.NumberFormatting\NumeralSystemTranslator.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\NumeralSystemTranslatorHelper.cs" Link="Windows.Globalization.NumberFormatting\NumeralSystemTranslatorHelper.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\PercentFormatter.cs" Link="Windows.Globalization.NumberFormatting\PercentFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\PermilleFormatter.cs" Link="Windows.Globalization.NumberFormatting\PermilleFormatter.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\Rounder.cs" Link="Windows.Globalization.NumberFormatting\Rounder.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\RoundingAlgorithm.cs" Link="Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\SignificantDigitsNumberRounder.cs" Link="Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
+    <PackageReference Include="coverlet.collector" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Generated\Windows.Globalization.NumberFormatting\" />
+    <Folder Include="Windows.Globalization.NumberFormatting\" />
+  </ItemGroup>
+
+</Project>

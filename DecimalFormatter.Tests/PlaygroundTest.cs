@@ -29,8 +29,8 @@ namespace DecimalFormatterTests.UWP
         [TestMethod]
         public void Test3()
         {
-            var formatter = new PermilleFormatter();
-            var actual = formatter.FormatDouble(1.5);
+            var sut = new SignificantDigitsNumberRounder();
+            sut.SignificantDigits = 0;
         }
 
     }
