@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Globalization.NumberFormatting;
@@ -13,19 +14,19 @@ namespace DecimalFormatterTests.UWP
     public class CodeGenerator
     {
         [TestMethod]
-        public void GenerateSymbolSwitchCases()
+        public void GenerateCurrencyDataClass()
         {
             var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var path = Path.Combine(dir, "currency.csv");
-            var lines = File.ReadAllLines(path);
             var stringBuilder = new StringBuilder();
             var fieldStringBuilder = new StringBuilder();
 
-            foreach (var line in lines)
+            var type = typeof(Windows.Globalization.CurrencyIdentifiers);
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+            foreach (var prop in props)
             {
-                var parameters = line.Split(',');
-                var currencyCode = parameters[1];
-                //var symbol = parameters[2];
+                var value = prop.GetValue(null, null);
+                var currencyCode = (string)value;
 
                 try
                 {
@@ -35,9 +36,9 @@ namespace DecimalFormatterTests.UWP
 
                     var symbol = formatted.Remove(index, 1 + (formatter.FractionDigits > 0 ? formatter.FractionDigits + 1 : 0));
 
-                    fieldStringBuilder.AppendLine($"private static readonly CurrencyData _{currencyCode.ToLowerInvariant()}CurrencyData = new CurrencyData {{ CurrencyCode = \"{currencyCode}\", Symbol = \"{symbol}\", DefaultFractionDigits = {formatter.FractionDigits} }};");
+                    fieldStringBuilder.AppendLine($"private static readonly CurrencyData _{currencyCode.ToLowerInvariant()}CurrencyData = new CurrencyData {{ CurrencyCode = CurrencyIdentifiers.{currencyCode}CurrencyIdentifier, Symbol = \"{symbol}\", DefaultFractionDigits = {formatter.FractionDigits} }};");
 
-                    stringBuilder.AppendLine($"case \"{currencyCode}\":");
+                    stringBuilder.AppendLine($"case CurrencyIdentifiers.{currencyCode}CurrencyIdentifier:");
                     stringBuilder.AppendLine($"\t return _{currencyCode.ToLowerInvariant()}CurrencyData;");
                 }
                 catch (Exception)
@@ -45,7 +46,7 @@ namespace DecimalFormatterTests.UWP
                 }
             }
 
-            path = Path.Combine(dir, "generatedSwitchCases.cs");
+            var path = Path.Combine(dir, "generatedSwitchCases.cs");
             File.WriteAllText(path, stringBuilder.ToString());
 
             path = Path.Combine(dir, "generatedfield.cs");
@@ -109,6 +110,32 @@ namespace DecimalFormatterTests.UWP
 
             path = Path.Combine(dir, "generatedFormatDoubleWithSpecialCurrencyCodeAndCurrencyCodeModeTestData.cs");
             File.WriteAllText(path, stringBuilder.ToString());
+        }
+
+        [TestMethod]
+        public void GenerateCurrencyIndentifiers()
+        {
+            var type = typeof(Windows.Globalization.CurrencyIdentifiers);
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+            var propBuilder = new StringBuilder();
+            var constsBuilder = new StringBuilder();
+
+            foreach (var prop in props)
+            {
+                var value = prop.GetValue(null, null);
+                var currencyCode = (string)value;
+                var propName = prop.Name;
+                constsBuilder.AppendLine($"internal const string {propName}CurrencyIdentifier = \"{currencyCode}\";");
+                propBuilder.AppendLine($"public static string {propName} => {propName}CurrencyIdentifier;");
+            }
+
+            constsBuilder.AppendLine();
+            propBuilder.Insert(0, constsBuilder.ToString());
+
+            var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var path = Path.Combine(dir, "generatedCurrencyIdentifiers.cs");
+            File.WriteAllText(path, propBuilder.ToString());
         }
     }
 }

@@ -65,7 +65,7 @@
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\Rounder.cs" Link="Windows.Globalization.NumberFormatting\Rounder.cs" />
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\RoundingAlgorithm.cs" Link="Windows.Globalization.NumberFormatting\RoundingAlgorithm.cs" />
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\SignificantDigitsNumberRounder.cs" Link="Windows.Globalization.NumberFormatting\SignificantDigitsNumberRounder.cs" />
-    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\StringBuilderPool.cs" Link="Windows.Globalization.NumberFormatting\StringBuilderPool.cs" />
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\StringBuildersContainer.cs" Link="Windows.Globalization.NumberFormatting\StringBuildersContainer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,7 +77,6 @@
 
   <ItemGroup>
     <Folder Include="Generated\Windows.Globalization.NumberFormatting\" />
-    <Folder Include="Windows.Globalization.NumberFormatting\" />
   </ItemGroup>
 
 </Project>

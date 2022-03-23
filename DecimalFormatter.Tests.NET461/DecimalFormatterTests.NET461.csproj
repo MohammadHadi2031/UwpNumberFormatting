@@ -23,6 +23,9 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -63,6 +66,15 @@
     <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs">
       <Link>Generated\Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs</Link>
     </Compile>
+    <Compile Include="..\..\uno\src\Uno.UWP\Generated\3.0.0.0\Windows.Globalization\CurrencyIdentifiers.cs">
+      <Link>Generated\CurrencyIdentifiers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\ApplicationLanguages.cs">
+      <Link>Windows.Globalization\ApplicationLanguages.cs</Link>
+    </Compile>
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\CurrencyIdentifiers.cs">
+      <Link>Windows.Globalization\CurrencyIdentifiers.cs</Link>
+    </Compile>
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\CurrencyData.cs">
       <Link>Windows.Globalization.NumberFormatting\CurrencyData.cs</Link>
     </Compile>
@@ -72,12 +84,17 @@
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\CurrencyFormatterMode.cs">
       <Link>Windows.Globalization.NumberFormatting\CurrencyFormatterMode.cs</Link>
     </Compile>
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\ExceptionHelper.cs">
+      <Link>Windows.Globalization.NumberFormatting\ExceptionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\Extensions.cs">
       <Link>Windows.Globalization.NumberFormatting\Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\StringBuildersContainer.cs">
+      <Link>Windows.Globalization.NumberFormatting\StringBuildersContainer.cs</Link>
+    </Compile>
     <Compile Include="ApiInformation.cs" />
     <Compile Include="CodeGenerator.cs" />
-    <Compile Include="CurrencyHelper.cs" />
     <Compile Include="G:\CodeLab\uno\src\Uno.UI.Tests\Windows_Globalization\Given_DecimalFormatter.cs">
       <Link>Given_DecimalFormatter.cs</Link>
     </Compile>
@@ -207,6 +224,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
