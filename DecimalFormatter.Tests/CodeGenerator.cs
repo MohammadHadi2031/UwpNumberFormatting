@@ -56,59 +56,49 @@ namespace DecimalFormatterTests.UWP
         [TestMethod]
         public void GenerateFormatDoubleWithSpecialCurrencyCodeTestData()
         {
-            var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var path = Path.Combine(dir, "currency.csv");
-            var lines = File.ReadAllLines(path);
             var stringBuilder = new StringBuilder();
 
-            foreach (var line in lines)
+            var type = typeof(Windows.Globalization.CurrencyIdentifiers);
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+            foreach (var prop in props)
             {
-                var parameters = line.Split(',');
-                var currencyCode = parameters[1];
+                var value = prop.GetValue(null, null);
+                var currencyCode = (string)value;
+               
+                var formatter = new CurrencyFormatter(currencyCode);
+                var formatted = formatter.FormatDouble(1d);
 
-                try
-                {
-                    var formatter = new CurrencyFormatter(currencyCode);
-                    var formatted = formatter.FormatDouble(1d);
-
-                    stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{formatted}\")]");
-                }
-                catch (Exception)
-                {
-                }
+                stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{formatted}\")]");
             }
-
-            path = Path.Combine(dir, "generatedFormatDoubleWithSpecialCurrencyCodeTestData.cs");
+            
+            var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var path = Path.Combine(dir, "generatedFormatDoubleWithSpecialCurrencyCodeTestData.cs");
             File.WriteAllText(path, stringBuilder.ToString());
         }
 
         [TestMethod]
         public void GenerateFormatDoubleWithSpecialCurrencyCodeAndCurrencyCodeModeTestData()
         {
-            var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var path = Path.Combine(dir, "currency.csv");
-            var lines = File.ReadAllLines(path);
             var stringBuilder = new StringBuilder();
 
-            foreach (var line in lines)
+            var type = typeof(Windows.Globalization.CurrencyIdentifiers);
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+            foreach (var prop in props)
             {
-                var parameters = line.Split(',');
-                var currencyCode = parameters[1];
+                var value = prop.GetValue(null, null);
+                var currencyCode = (string)value;
+               
+                var formatter = new CurrencyFormatter(currencyCode);
+                formatter.Mode = CurrencyFormatterMode.UseCurrencyCode;
+                var formatted = formatter.FormatDouble(1d);
 
-                try
-                {
-                    var formatter = new CurrencyFormatter(currencyCode);
-                    formatter.Mode = CurrencyFormatterMode.UseCurrencyCode;
-                    var formatted = formatter.FormatDouble(1d);
-
-                    stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{formatted}\")]");
-                }
-                catch (Exception)
-                {
-                }
+                stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{formatted}\")]");
             }
 
-            path = Path.Combine(dir, "generatedFormatDoubleWithSpecialCurrencyCodeAndCurrencyCodeModeTestData.cs");
+            var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var path = Path.Combine(dir, "generatedFormatDoubleWithSpecialCurrencyCodeAndCurrencyCodeModeTestData.cs");
             File.WriteAllText(path, stringBuilder.ToString());
         }
 

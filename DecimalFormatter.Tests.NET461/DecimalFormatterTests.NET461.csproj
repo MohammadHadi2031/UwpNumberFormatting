@@ -90,8 +90,8 @@
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\Extensions.cs">
       <Link>Windows.Globalization.NumberFormatting\Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\StringBuildersContainer.cs">
-      <Link>Windows.Globalization.NumberFormatting\StringBuildersContainer.cs</Link>
+    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\StringBuilderCache.cs">
+      <Link>StringBuilderCache.cs</Link>
     </Compile>
     <Compile Include="ApiInformation.cs" />
     <Compile Include="CodeGenerator.cs" />

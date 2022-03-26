@@ -52,5 +52,18 @@ namespace TestStringFormat
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
         }
        
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            var pattern0 = "$1.5";
+            var d = double.Parse(pattern0, NumberStyles.Currency);
+        }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+
+        }
     }
 }
