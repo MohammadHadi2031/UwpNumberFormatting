@@ -57,6 +57,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\uno\src\Uno.Foundation\Uno.Core.Extensions\Uno.Core.Extensions\StringBuilderCache.cs">
+      <Link>StringBuilderCache.cs</Link>
+    </Compile>
     <Compile Include="..\..\uno\src\Uno.UI.Tests\Windows_Globalization\Given_CurrencyFormatter.cs">
       <Link>Given_CurrencyFormatter.cs</Link>
     </Compile>
@@ -89,9 +92,6 @@
     </Compile>
     <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\Extensions.cs">
       <Link>Windows.Globalization.NumberFormatting\Extensions.cs</Link>
-    </Compile>
-    <Compile Include="..\..\uno\src\Uno.UWP\Globalization\NumberFormatting\StringBuilderCache.cs">
-      <Link>StringBuilderCache.cs</Link>
     </Compile>
     <Compile Include="ApiInformation.cs" />
     <Compile Include="CodeGenerator.cs" />

@@ -13,6 +13,8 @@ namespace DecimalFormatterTests.UWP
     [TestClass]
     public class CodeGenerator
     {
+        private const string NoBreakSpaceChar = " ";
+
         [TestMethod]
         public void GenerateCurrencyDataClass()
         {
@@ -27,23 +29,13 @@ namespace DecimalFormatterTests.UWP
             {
                 var value = prop.GetValue(null, null);
                 var currencyCode = (string)value;
+                var data = ExtractData(currencyCode);
+                var alwaysUseCurrencyCode = data.symbol == currencyCode;
 
-                try
-                {
-                    var formatter = new CurrencyFormatter(currencyCode);
-                    var formatted = formatter.FormatDouble(1d);
-                    var index = formatted.IndexOf('1');
+                fieldStringBuilder.AppendLine($"private static readonly CurrencyData _{currencyCode.ToLowerInvariant()}CurrencyData = new CurrencyData {{ CurrencyCode = CurrencyIdentifiers.{currencyCode}CurrencyIdentifier, Symbol = \"{data.symbol}\", DefaultFractionDigits = {data.fractionDigits}, AlwaysUseCurrencyCode = {alwaysUseCurrencyCode.ToString().ToLowerInvariant()} }};");
 
-                    var symbol = formatted.Remove(index, 1 + (formatter.FractionDigits > 0 ? formatter.FractionDigits + 1 : 0));
-
-                    fieldStringBuilder.AppendLine($"private static readonly CurrencyData _{currencyCode.ToLowerInvariant()}CurrencyData = new CurrencyData {{ CurrencyCode = CurrencyIdentifiers.{currencyCode}CurrencyIdentifier, Symbol = \"{symbol}\", DefaultFractionDigits = {formatter.FractionDigits} }};");
-
-                    stringBuilder.AppendLine($"case CurrencyIdentifiers.{currencyCode}CurrencyIdentifier:");
-                    stringBuilder.AppendLine($"\t return _{currencyCode.ToLowerInvariant()}CurrencyData;");
-                }
-                catch (Exception)
-                {
-                }
+                stringBuilder.AppendLine($"case CurrencyIdentifiers.{currencyCode}CurrencyIdentifier:");
+                stringBuilder.AppendLine($"\t return _{currencyCode.ToLowerInvariant()}CurrencyData;");
             }
 
             var path = Path.Combine(dir, "generatedSwitchCases.cs");
@@ -65,13 +57,11 @@ namespace DecimalFormatterTests.UWP
             {
                 var value = prop.GetValue(null, null);
                 var currencyCode = (string)value;
-               
-                var formatter = new CurrencyFormatter(currencyCode);
-                var formatted = formatter.FormatDouble(1d);
+                var data = ExtractData(currencyCode);
 
-                stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{formatted}\")]");
+                stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{data.formattedOne}\", \"{data.symbol}\")]");
             }
-            
+
             var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(dir, "generatedFormatDoubleWithSpecialCurrencyCodeTestData.cs");
             File.WriteAllText(path, stringBuilder.ToString());
@@ -89,12 +79,9 @@ namespace DecimalFormatterTests.UWP
             {
                 var value = prop.GetValue(null, null);
                 var currencyCode = (string)value;
-               
-                var formatter = new CurrencyFormatter(currencyCode);
-                formatter.Mode = CurrencyFormatterMode.UseCurrencyCode;
-                var formatted = formatter.FormatDouble(1d);
+                var data = ExtractData(currencyCode);
 
-                stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{formatted}\")]");
+                stringBuilder.AppendLine($"[DataRow(\"{currencyCode}\", \"{data.formattedOne}\")]");
             }
 
             var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -126,6 +113,37 @@ namespace DecimalFormatterTests.UWP
             var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(dir, "generatedCurrencyIdentifiers.cs");
             File.WriteAllText(path, propBuilder.ToString());
+        }
+
+        private (string symbol, string formattedOne, int fractionDigits) ExtractData(string currencyCode)
+        {
+            var formatter = new CurrencyFormatter(currencyCode);
+            var formatted = formatter.FormatDouble(1d);
+            var index = formatted.IndexOf('1');
+
+            try
+            {
+                var symbol = formatted.Remove(index, 1 + (formatter.FractionDigits > 0 ? formatter.FractionDigits + 1 : 0))
+                            .Replace(" ", string.Empty)
+                            .Replace(NoBreakSpaceChar, string.Empty);
+
+                var formattedOne = formatted;
+
+                if (!string.IsNullOrEmpty(symbol))
+                {
+                    formattedOne = formatted
+                        .Replace(symbol, string.Empty)
+                        .Replace(" ", string.Empty)
+                        .Replace(NoBreakSpaceChar, string.Empty);
+                }
+
+                return (symbol, formattedOne, formatter.FractionDigits);
+
+            }
+            catch (Exception)
+            {
+                return ("", formatted, formatter.FractionDigits);
+            }
         }
     }
 }
